@@ -36,6 +36,10 @@ requirements:
 test:
   imports:
     - mistral_common
+    - mistral_common.protocol
+    - mistral_common.tokens
+    - mistral_common.protocol.instruct
+    - mistral_common.tokens.tokenizers
   commands:
     - pip check
   requires:

@@ -1,0 +1,3 @@
+channels:
+  - https://staging.continuum.io/prefect/fs/pycountry-feedstock/pr2/62e52cb
+  - https://staging.continuum.io/prefect/fs/pydantic-extra-types-feedstock/pr2/45857d6
