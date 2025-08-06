@@ -12,13 +12,14 @@ source:
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<39 or py>=314]
+  skip: true  # [py<39 or py>313]
 
 requirements:
   host:
     - pip
     - python
-    - setuptools
+    - wheel
+    - setuptools >=42
   run:
     - python
     - pydantic >=2.7,<3.0
