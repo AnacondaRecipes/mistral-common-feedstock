@@ -11,45 +11,60 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv
-  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<39 or py>313]
 
 requirements:
   host:
     - pip
-    - python {{ python_min }}
-    - setuptools
-    - setuptools_scm
-    - poetry
+    - python
+    - wheel
+    - setuptools >=42
   run:
-    - python >={{ python_min }}
-    - jsonschema >=4.21.1
-    - numpy >=1.25
-    - pillow >=10.3.0
+    - python
     - pydantic >=2.7,<3.0
-    - pydantic-extra-types >=2.10.5
-    - requests >=2.0.0
+    - jsonschema >=4.21.1
     - sentencepiece >=0.2.0
-    - tiktoken >=0.7.0
     - typing-extensions >=4.11.0
+    - tiktoken >=0.7.0
+    - pillow >=10.3.0
+    - requests >=2.0.0
+    - numpy >=1.25
+    - pydantic-extra-types >=2.10.5
+    # pydantic-extra-types[pycountry]
+    - pycountry >=23
+  run_constrained:
+    - opencv >=4.0.0
+    - opencv-python-headless >=4.0.0
+    - soundfile >=0.12.1
+    - soxr >=0.5.0
+    - huggingface-hub >=0.32.4
+    - fastapi >=0.115.12
+    - pydantic-settings >=2.9.1
+    - click >=8.1.0
 
 test:
   imports:
     - mistral_common
+    - mistral_common.protocol
+    - mistral_common.tokens
+    - mistral_common.protocol.instruct
+    - mistral_common.tokens.tokenizers
   commands:
     - pip check
   requires:
-    - numpy
     - pip
-    - python {{ python_min }}
-  downstreams:
-    - mistral-inference
 
 about:
   home: https://github.com/mistralai/mistral-common
   summary: Set of tools to help you work with Mistral models
+  description: |
+    Set of tools to help you work with Mistral models.
   license: Apache-2.0
   license_file: LICENCE
+  license_family: Apache
+  dev_url: https://github.com/mistralai/mistral-common
+  doc_url: https://github.com/mistralai/mistral-common
 
 extra:
   recipe-maintainers:
