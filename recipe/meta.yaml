@@ -1,5 +1,5 @@
 {% set name = "mistral-common" %}
-{% set version = "1.9.1" %}
+{% set version = "1.11.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/mistral_common-{{ version }}.tar.gz
-    sha256: 550583d70a395c3586cfb748ffab53bd1d7c3409507f0efc0118bff30ffb26e9
+    sha256: 79f68fc2d1190f28637f40e053f919c8c2697e00b2aa679ddee562a95183f4ad
   - url: https://raw.githubusercontent.com/mistralai/mistral-common/v{{ version }}/LICENCE
     sha256: 5ed6f79e77734b5a60740dd821af5ecac9a6f33709c860eea4e20fcb6cca7fcc
     fn: LICENSE
@@ -17,7 +17,6 @@ build:
   number: 0
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  # pyproject.toml currently limits the python version to less than 3.14
   skip: true  # [py<310 or py>313]
 
 requirements:
@@ -32,25 +31,37 @@ requirements:
     - setuptools >=77.0.3
   run:
     - python
-    - pydantic >=2.7,<3.0
+    - pydantic >=2.7,<3.0  # [py<314]
+    - pydantic >=2.12,<3.0  # [py>=314] 
     - jsonschema >=4.21.1
     
     - typing-extensions >=4.11.0
-    - tiktoken >=0.7.0
+    - tiktoken >=0.7.0  # [py<314]
+    - tiktoken >=0.12.0  # [py>=314]
     - pillow >=10.3.0
     - requests >=2.0.0
-    - numpy >=1.25
+    # upstream pyproject.toml caps numpy at <2.4 for py<=3.12; py>=3.13 is unbounded
+    - numpy >=1.25,<2.4  # [py<313]
+    - numpy >=1.25       # [py>=313]
     - pydantic-extra-types >=2.10.5
     # pydantic-extra-types[pycountry]
     - pycountry >=23
   run_constrained:
-    - sentencepiece >=0.2.0
-    - opencv >=4.0.0
+    # [opencv] / [image] extras
     - opencv-python-headless >=4.0.0
+    # [sentencepiece] extra
+    - sentencepiece >=0.2.0
+    # [soundfile] / [audio] extras
     - soundfile >=0.12.1
+    # [soxr] / [audio] extras (upstream extra is `soxr`; pkgs/main name is `soxr-python`)
     - soxr-python >=0.5.0
-    - huggingface-hub >=0.32.4
-    - fastapi >=0.115.12
+    # [guidance] extra (new in 1.10+)
+    - llguidance >=1.3.0,<1.4.0
+    - jinja2 >=3.1.0
+    # [hf-hub] extra
+    - huggingface-hub >=1.0
+    # [server] extra
+    - fastapi >=0.118.3
     - pydantic-settings >=2.9.1
     - click >=8.1.0
 
