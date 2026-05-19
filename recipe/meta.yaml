@@ -37,7 +37,8 @@ requirements:
     - jsonschema >=4.21.1
     
     - typing-extensions >=4.11.0
-    - tiktoken >=0.7.0
+    - tiktoken >=0.7.0  # [py<314]
+    - tiktoken >=0.12.0  # [py>=314]
     - pillow >=10.3.0
     - requests >=2.0.0
     # upstream pyproject.toml caps numpy at <2.4 for py<=3.12; py>=3.13 is unbounded
