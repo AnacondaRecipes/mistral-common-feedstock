@@ -32,7 +32,8 @@ requirements:
     - setuptools >=77.0.3
   run:
     - python
-    - pydantic >=2.7,<3.0
+    - pydantic >=2.7,<3.0  # [py<314]
+    - pydantic >=2.12,<3.0  # [py>=314] 
     - jsonschema >=4.21.1
     
     - typing-extensions >=4.11.0
