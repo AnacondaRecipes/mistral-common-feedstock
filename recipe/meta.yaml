@@ -17,7 +17,6 @@ build:
   number: 0
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  # pyproject.toml currently limits the python version to less than 3.14
   skip: true  # [py<310 or py>313]
 
 requirements:
