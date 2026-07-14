@@ -14,10 +14,10 @@ source:
 
 
 build:
-  number: 0
+  number: 1
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<310 or py>313]
+  skip: true  # [py<310]
 
 requirements:
   host:
@@ -64,6 +64,7 @@ requirements:
     - fastapi >=0.118.3
     - pydantic-settings >=2.9.1
     - click >=8.1.0
+    - uvloop >=0.22.1  # [py>=314]
 
 test:
   imports:
@@ -72,6 +73,7 @@ test:
     - mistral_common.tokens
     - mistral_common.protocol.instruct
     - mistral_common.tokens.tokenizers
+    - mistral_common.tokens.tokenizers.tekken
   commands:
     - pip check
   requires:
