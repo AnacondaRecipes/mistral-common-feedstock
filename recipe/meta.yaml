@@ -1,5 +1,5 @@
 {% set name = "mistral-common" %}
-{% set version = "1.11.6" %}
+{% set version = "1.12.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,10 +7,7 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/mistral_common-{{ version }}.tar.gz
-    sha256: 35ed428e0e886808f0c048adac56843ce77d6cee13c1b54a045ad8d11e77c756
-  - url: https://raw.githubusercontent.com/mistralai/mistral-common/v{{ version }}/LICENCE
-    sha256: 5ed6f79e77734b5a60740dd821af5ecac9a6f33709c860eea4e20fcb6cca7fcc
-    fn: LICENSE
+    sha256: d0f150926733cf422d4750ca19b47568df1f714557c9054a432b866f1f30bf52
 
 
 build:
