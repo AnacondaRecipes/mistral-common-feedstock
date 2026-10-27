@@ -14,7 +14,8 @@ build:
   number: 0
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<310]
+  # upstream requires-python is >=3.10,<3.15
+  skip: true  # [py<310 or py>314]
 
 requirements:
   host:
@@ -23,15 +24,14 @@ requirements:
     - wheel
     # setuptools must be at least this version for compatibility with PEP639. The pyproject.toml
     # for mistral-common looks to be defined with this PEP in mind, so setuptools needs
-    # to support it as well. 
+    # to support it as well.
     # https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license-and-license-files
     - setuptools >=77.0.3
   run:
     - python
     - pydantic >=2.7,<3.0  # [py<314]
-    - pydantic >=2.12,<3.0  # [py>=314] 
+    - pydantic >=2.12,<3.0  # [py>=314]
     - jsonschema >=4.21.1
-    
     - typing-extensions >=4.11.0
     - tiktoken >=0.7.0  # [py<314]
     - tiktoken >=0.12.0  # [py>=314]
