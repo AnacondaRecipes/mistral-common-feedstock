@@ -1,23 +1,21 @@
 {% set name = "mistral-common" %}
-{% set version = "1.11.6" %}
+{% set version = "1.12.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/mistral_common-{{ version }}.tar.gz
-    sha256: 35ed428e0e886808f0c048adac56843ce77d6cee13c1b54a045ad8d11e77c756
-  - url: https://raw.githubusercontent.com/mistralai/mistral-common/v{{ version }}/LICENCE
-    sha256: 5ed6f79e77734b5a60740dd821af5ecac9a6f33709c860eea4e20fcb6cca7fcc
-    fn: LICENSE
+  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
+    sha256: d0f150926733cf422d4750ca19b47568df1f714557c9054a432b866f1f30bf52
 
 
 build:
   number: 0
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<310]
+  # upstream requires-python is >=3.10,<3.15
+  skip: true  # [py<310 or py>314]
 
 requirements:
   host:
@@ -26,15 +24,14 @@ requirements:
     - wheel
     # setuptools must be at least this version for compatibility with PEP639. The pyproject.toml
     # for mistral-common looks to be defined with this PEP in mind, so setuptools needs
-    # to support it as well. 
+    # to support it as well.
     # https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license-and-license-files
     - setuptools >=77.0.3
   run:
     - python
     - pydantic >=2.7,<3.0  # [py<314]
-    - pydantic >=2.12,<3.0  # [py>=314] 
+    - pydantic >=2.12,<3.0  # [py>=314]
     - jsonschema >=4.21.1
-    
     - typing-extensions >=4.11.0
     - tiktoken >=0.7.0  # [py<314]
     - tiktoken >=0.12.0  # [py>=314]
@@ -48,19 +45,19 @@ requirements:
     - pycountry >=23
   run_constrained:
     # [opencv] / [image] extras
-    - opencv-python-headless >=4.0.0
+    - opencv >=4.0.0
     # [sentencepiece] extra
     - sentencepiece >=0.2.0
     # [soundfile] / [audio] extras
-    - soundfile >=0.12.1
+    - pysoundfile >=0.12.1
     # [soxr] / [audio] extras (upstream extra is `soxr`; pkgs/main name is `soxr-python`)
     - soxr-python >=0.5.0
     # [guidance] extra (new in 1.10+)
     # llguidance pin differs slightly from upstream: This appears to be an overzealous pin
-    - llguidance >=1.3.0,<2.0.0
+    - llguidance >=1.3.0,<1.8.0
     - jinja2 >=3.1.0
     # [hf-hub] extra
-    - huggingface-hub >=1.0
+    - huggingface_hub >=1.0
     # [server] extra
     - fastapi >=0.118.3
     - pydantic-settings >=2.9.1
